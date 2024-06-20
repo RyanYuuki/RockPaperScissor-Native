@@ -1,70 +1,93 @@
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { Text, View, StyleSheet, Pressable, Image } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "expo-router";
+import { useFonts, Poppins_500Medium, Poppins_700Bold } from "@expo-google-fonts/poppins";
 
 export default function HomeScreen() {
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        <Text style={styles.heading}>Rock Paper Scissors</Text>
-      </View>
+  const [fontsLoaded] = useFonts({
+    Poppins_500Medium,
+    Poppins_700Bold,
+  });
 
-      <View style={styles.bodyBox}>
+  if (!fontsLoaded) {
+    return null; 
+  }
+
+  return (
+    <View style={styles.safeArea}>
+      <Image source={ require("../../assets/background.png") } style={styles.backgroundImage} />
+      <View style={styles.container}>
+        <Image source={ require("../../assets/MainPage-Icon.png") } style={styles.icon} />
+        <Text style={styles.heading}>Rock Paper Scissors</Text>
+        <View style={styles.bodyBox}>
         <Text style={styles.instructions}>Press the button of your choice before the hand stops. First to 3 wins.</Text>
         <Link href="./play" asChild>
-        <Pressable 
-        style={styles.button} > 
-          <Text style={styles.button}>Play</Text>
-        </Pressable>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>Play</Text>
+          </Pressable>
         </Link>
       </View>
-    </SafeAreaView>
+      </View>
+
+      
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#eee',
+  },
+  backgroundImage: {
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+
   },
   container: {
-    height: 250,
-    width: '95%',
-    alignSelf: 'center',
-    backgroundColor: "dodgerblue",
+    height: '100%',
+    width: '100%',
     alignItems: "center",
     borderRadius: 12,
+    borderWidth: 2,
+    borderColor: 'black',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    justifyContent: 'space-evenly'
+  },
+  icon: {
+    width: 300,
+    height: 300,
   },
   heading: {
-    marginTop: 30,
-    fontSize: 35,
-    fontWeight: "bold",
+    fontSize: 30,
     textAlign: "center",
-    letterSpacing: 2,
-    width: '60%',
-    color: 'white',
+    color: 'black',
+    fontFamily: 'Poppins_700Bold',
   },
-  bodyBox: {
-    position: 'absolute',
-    justifyContent: 'space-evenly',
-    top: 200,
-    height: 500,
+  bodyBox: { 
+    height: 200,
     width: '80%',
-    padding: 30,
+    padding: 20,
     alignSelf: 'center',
-    backgroundColor: "#fff",
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
     borderRadius: 20,
-    elevation: 20,
   },
   instructions: {
     fontSize: 16,
-  },
-  button : {
-    padding: 10,
-    backgroundColor: 'dodgerblue',
-    borderRadius: 12,
     textAlign: 'center',
-    color : 'white'
+    fontFamily: 'Poppins_500Medium',
+    marginBottom: 20,
+  },
+  button: {
+    padding: 10,
+    backgroundColor: '#86469C',
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 20,
+    fontFamily: 'Poppins_500Medium',
   }
 });
